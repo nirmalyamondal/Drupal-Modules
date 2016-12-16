@@ -1,0 +1,30 @@
+crosswords.addedit:
+  version: 8.x
+  js:
+    js/handsontable.full.js: {}
+    js/crosswords.coreBE.js: {}
+  dependencies:
+    - core/jquery
+    # We are also going to use jQuery.once so that code doesn't trigger multiple times.
+    - core/jquery.once
+    - core/drupal
+    - core/drupal.ajax
+    - core/drupalSettings
+  css:
+    theme:
+      css/handsontable.full.min.css: {}
+      css/crosswords.customBE.css: {}
+
+crosswords.display:
+  version: 8.x
+  js:
+    js/jquery-1.4.2.min.js: {}
+    js/jquery.easydrag.handler.beta2.js: {}
+    js/crosswords.crosswords.js: {}
+    js/crosswords.coreFE.js: {}
+  dependencies:
+    - core/drupal
+    - core/drupalSettings
+  css:
+    theme:
+      css/crosswords.main.css: {}
