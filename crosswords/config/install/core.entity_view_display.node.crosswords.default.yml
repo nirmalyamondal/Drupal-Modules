@@ -1,0 +1,36 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.crosswords.field_crosswords_text
+    - field.field.node.crosswords.field_crosswords_hrow
+    - field.field.node.crosswords.field_crosswords_hcolumn
+    - node.type.crosswords
+  module:
+    - user
+id: node.crosswords.default
+targetEntityType: node
+bundle: crosswords
+mode: default
+content:
+  field_crosswords_text:
+    weight: 103
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: basic_string
+  field_crosswords_hrow:
+    weight: 102
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: basic_string
+  field_crosswords_hcolumn:
+    weight: 101
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: basic_string
+  links:
+    weight: 100
+hidden: {  }

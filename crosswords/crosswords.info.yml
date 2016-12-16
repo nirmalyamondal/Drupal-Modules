@@ -1,0 +1,10 @@
+name: Crosswords
+description: A module to create Crosswords to play.
+package: Custom
+type: module
+version: 1.0
+core: '8.x'
+dependencies:
+  - node
+  - path
+  - text

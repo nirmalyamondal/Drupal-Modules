@@ -1,0 +1,7 @@
+crosswords.detail:
+  path: '/crosswords'
+  defaults:
+    _title: 'Crosswords'
+    _controller: 'Drupal\crosswords\Controller\CrosswordsController::showCrosswords'
+  requirements:
+    _permission: 'access content'

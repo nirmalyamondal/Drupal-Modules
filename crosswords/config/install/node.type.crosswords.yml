@@ -1,0 +1,11 @@
+langcode: en
+status: true
+dependencies: {  }
+name: 'Crosswords'
+type: crosswords
+description: 'You must uninstall this module before you delete this content type.'
+help: ''
+new_revision: false
+preview_mode: 1
+display_submitted: true
+third_party_settings: {  }
