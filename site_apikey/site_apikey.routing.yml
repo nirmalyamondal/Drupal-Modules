@@ -1,0 +1,7 @@
+site_apikey_accesschecker:
+  path: '/page_json/{apikey}/{nid}'
+  defaults:
+    _controller: 'Drupal\site_apikey\Controller\SiteApikeyController::accessChecker'
+    _title: ''
+  requirements:
+    _permission: 'access content'
