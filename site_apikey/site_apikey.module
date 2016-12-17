@@ -1,26 +1,26 @@
-<?php 
+<?php
 
-  /**
+/**
    * {@inheritdoc}
    */
-  function site_apikey_form_system_site_information_settings_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
-		$site_apikey_setting	= \Drupal::config('system.site')->get('siteapikey')?\Drupal::config('system.site')->get('siteapikey'):t('No API Key yet');
-		if(in_array("administrator", \Drupal::currentUser()->getRoles())) {
-			$form['site_information']['siteapikey'] = [
-				'#type' => 'textfield',
-				'#title' => t('Site API Key'),
-				'#description' => t('16 Character long key to access some pages of this site.'),
-				'#default_value' => $site_apikey_setting,
-				'#weight' => '2',
-			];
-			if($site_apikey_setting !== t('No API Key yet')) {
-				//$form['actions']['submit']['#value'] = 'Update Configuration';   
-			}			
-			// extra submit form handle
-			$form['#validate'][] = 'Drupal\site_apikey\Controller\SiteApikeyController::site_apikey_form_validate';
-			$form['#submit'][] = 'Drupal\site_apikey\Controller\SiteApikeyController::site_apikey_form_submit';			
-		}// Admin		
-	}
+    function site_apikey_form_system_site_information_settings_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+        $site_apikey_setting	= \Drupal::config('system.site')->get('siteapikey')?\Drupal::config('system.site')->get('siteapikey'):t('No API Key yet');
+        if(in_array("administrator", \Drupal::currentUser()->getRoles())) {
+                $form['site_information']['siteapikey'] = [
+                    '#type' => 'textfield',
+                    '#title' => t('Site API Key'),
+                    '#description' => t('16 Character long key to access some pages of this site.'),
+                    '#default_value' => $site_apikey_setting,
+                    '#weight' => '2',
+                ];
+                if($site_apikey_setting !== t('No API Key yet')) {
+                    //$form['actions']['submit']['#value'] = 'Update Configuration';   
+                }			
+                // extra submit form handle
+                $form['#validate'][] = 'Drupal\site_apikey\Controller\SiteApikeyController::site_apikey_form_validate';
+                $form['#submit'][] = 'Drupal\site_apikey\Controller\SiteApikeyController::site_apikey_form_submit';			
+        }// Admin		
+    }
 
 /**
  * Implements hook_variable_info().
