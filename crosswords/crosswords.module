@@ -9,9 +9,7 @@ function crosswords_theme($existing, $type, $theme, $path) {
   return [
     'crosswords-crosswords' => [
       'variables' => [
-        'crosswords_variable_title' => NULL,
-        'crosswords_hint_varticle' => NULL,
-        'crosswords_hint_horizontal' => NULL
+        'crosswords_variable_title' => NULL
       ],
     ],
   ];

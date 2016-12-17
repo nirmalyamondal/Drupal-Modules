@@ -1,7 +1,11 @@
-crosswords.detail:
-  path: '/crosswords'
+crosswords_view:
+  path: '/crosswords/{cross_node}'
   defaults:
-    _title: 'Crosswords'
+    _title: ''
     _controller: 'Drupal\crosswords\Controller\CrosswordsController::showCrosswords'
   requirements:
     _permission: 'access content'
+  options:
+    parameters:
+      cross_node:
+        type: entity:node
