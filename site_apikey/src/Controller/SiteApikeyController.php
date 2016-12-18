@@ -7,8 +7,7 @@ namespace Drupal\site_apikey\Controller;
   Contains \Drupal\site_apikey\Controller\SiteApikeyController.
  */
 use Drupal\Core\Controller\ControllerBase;
-
-//use Drupal\Component\Serialization\Json;
+use Drupal\node\NodeInterface;
 
 class SiteApikeyController extends ControllerBase {
 
@@ -19,24 +18,21 @@ class SiteApikeyController extends ControllerBase {
      * 
      * @return array
      */
-    public function accessChecker($apikey, $nid) {
-        //$apikey	= \Drupal::request()->attributes->all()['apikey'];
-        //$nid		= \Drupal::request()->attributes->all()['nid'];
+    public function accessChecker($apikey, NodeInterface $page_node) {
         $siteapikey = \Drupal::config('system.site')->get('siteapikey');
         if ($apikey === $siteapikey) {
-            $current_node = \Drupal\node\Entity\Node::load($nid);
-            if (!is_object($current_node)) {
-                echo t('Content Type Mismatch!');
+            if (!is_object($page_node)) {   // Drupal will handle this for us ;)
+                echo t('Problem in Content loading ...!');
                 die();
             }
-            //print_r($current_node->type->entity->label()); 
-            if ($current_node->getType() === 'page') {
-                //$node_jsondata = Json::encode($current_node, 'json');
+            if ($page_node->getType() === 'page') {
                 $serializer = \Drupal::service('serializer');
-                $node_jsondata = $serializer->serialize($current_node, 'json', ['plugin_id' => 'entity']);
+                $node_jsondata = $serializer->serialize($page_node, 'json', ['plugin_id' => 'entity']);
                 echo $node_jsondata;
                 die();
             }
+            echo t('Content Type Mismatch!');
+            die();
         }
         echo t('Access Denied!');
         die();
