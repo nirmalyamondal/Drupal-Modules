@@ -9,7 +9,7 @@ Crosswords module creates and displays crosswords.
  - Adding and Removing of Hints/ Clues can be pre-onfigured very easily.
  - Site editor can set the size of the Crosswords box and placing the words inside the box.
  - Uncheck the PROMOTION OPTIONS for not promoting to front page as this plugin render Crosswords differently.
- - More ...
+ - Un-installation automatically deleted the Crosswords contents and content type.
 
 This module is safe to use on a production site. 
 
