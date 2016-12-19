@@ -6,7 +6,6 @@ namespace Drupal\crosswords\Controller;
  * @file
  * Contains \Drupal\crosswords\Controller\CrosswordsController.
  */
-
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\node\NodeInterface;
 
@@ -15,7 +14,7 @@ use Drupal\node\NodeInterface;
  */
 class CrosswordsController extends ControllerBase {
 
-   /**
+    /**
      * {@inheritdoc}
      *
      */
@@ -36,6 +35,9 @@ class CrosswordsController extends ControllerBase {
         $crosswordsHcolumn = $cross_node->get('field_crosswords_hcolumn')->value;
         $crosswordsHrow = $cross_node->get('field_crosswords_hrow')->value;
         $crosswordsTitle = $cross_node->get('title')->value;
+        if (strlen($savedCrosswords) <= 2) {
+            return [];
+        }
         if (strpos($savedCrosswords, '###') !== FALSE) {
             $explodedSavedCrosswords = explode('###', $savedCrosswords);
         }
