@@ -6283,7 +6283,7 @@
                     ilen,
                     schema = this.getSchema();
                 if (typeof schema === 'undefined') {
-                    throw new Error('trying to create `columns` definition but you didnt\' provide `schema` nor `data`');
+                    throw new Error('trying to create `columns` definition but you didn\'t provide `schema` nor `data`');
                 }
                 this.colToPropCache = [];
                 this.propToColCache = new MultiMap();
@@ -23059,10 +23059,10 @@
                                 ++week;
                             }
                         } else if (w.e != null) {
-                            // local weekday -- counting starts from begining of week
+                            // local weekday -- counting starts from beginning of week
                             weekday = w.e + dow;
                         } else {
-                            // default to begining of week
+                            // default to beginning of week
                             weekday = dow;
                         }
                     }

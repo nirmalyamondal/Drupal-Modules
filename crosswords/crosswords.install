@@ -18,7 +18,7 @@
 function crosswords_install() {
   // Do not allow the locked content type to be deleted.
   $locked = Drupal::state()->get('node.type.locked');
-  if($locked['crosswords'] !== 'crosswords'){
+  if ($locked['crosswords'] !== 'crosswords') {
 	$locked['crosswords'] = 'crosswords';
 	Drupal::state()->set('node.type.locked', $locked);
   }

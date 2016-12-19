@@ -2,17 +2,17 @@ Crosswords
 ==========
 Crosswords module creates and displays crosswords.
 
- - A predefined Locked content type "crosswords" get created.
+ - A predefined Locked content type "crosswords" get created i.e. similar to other Drupal Content Types.
  - Site Admin or Content Editor can add Crosswords through this content type.
- - Site Admin can set which Crosswords to display where i.e. similar to other Drupal Content Types.
+ - Site Admin can set which Crosswords to display with link like this http://mysite.com/crosswords/2/ where 2 is nid of the Crosswords.
  - There is a Crosswords Check button appears in frontend to validate input words.
- - Adding and Removing of Hints/ clues can be pre-onfigured very easily.
+ - Adding and Removing of Hints/ Clues can be pre-onfigured very easily.
  - Site editor can set the size of the Crosswords box and placing the words inside the box.
- - Uncheck the ROMOTION OPTIONS: Promoted to front page.
+ - Uncheck the PROMOTION OPTIONS for not promoting to front page as this plugin render Crosswords differently.
  - More ...
 
 This module is safe to use on a production site. 
 
 Author/Maintainers
 ======================
-- Nirmalya Mondal <typo3india at gmail DOT com> https://www.drupal.org/user/3492141/
+- Nirmalya Mondal <typo3india at gmail DOT com> http://nirmalyamondal.blogspot.in/

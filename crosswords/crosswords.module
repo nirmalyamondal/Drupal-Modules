@@ -1,6 +1,12 @@
 <?php
 
+/**
+ * @file
+ * Module file for crosswords.
+ */
+
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\crosswords\Controller\CrosswordsController;
 
 /**
  * {@inheritdoc}
@@ -9,7 +15,7 @@ function crosswords_theme($existing, $type, $theme, $path) {
   return [
     'crosswords-crosswords' => [
       'variables' => [
-        'crosswords_variable_title' => NULL
+        'crosswords_variable_title' => NULL,
       ],
     ],
   ];
@@ -19,21 +25,19 @@ function crosswords_theme($existing, $type, $theme, $path) {
  * {@inheritdoc}
  */
 function crosswords_form_alter(&$form, FormStateInterface $form_state, $form_id) {
-  //dpm($form);
   $defaultCells = '["","","","",""],["","","","",""],["","","","",""],["","","","",""],["","","","",""]';
   switch ($form_id) {
     case 'node_crosswords_edit_form':
-      // Processing Crosswords GRID
-      //$savedColumns = $form['field_columns']['widget'][0]['value']['#default_value'];
-      //$savedRows = $form['field_rows']['widget'][0]['value']['#default_value'];
+      // Processing Crosswords GRID.
       $savedCrosswords = $form['field_crosswords_text']['widget'][0]['value']['#default_value'];
-      if (strpos($savedCrosswords, '###') !== false) {
+      if (strpos($savedCrosswords, '###') !== FALSE) {
         $explodedSavedCrosswords = explode('###', $savedCrosswords);
       }
       $crosswordsArray = explode(",", $explodedSavedCrosswords[1]);
       $crosswordsData = '[';
       $counter = 1;
       $arrayCounted = count($crosswordsArray);
+      $crosswordsDataTemp = '';
       foreach ($crosswordsArray as $cArrayKey => $cArrayValue) {
         $crosswordsDataTemp = $crosswordsDataTemp ? $crosswordsDataTemp . ',"' . $cArrayValue . '"' : '"' . $cArrayValue . '"';
         if ($counter == $arrayCounted) {
@@ -47,16 +51,15 @@ function crosswords_form_alter(&$form, FormStateInterface $form_state, $form_id)
       }
       $crosswordsData .= ']';
       $form['#attached']['drupalSettings']['crosswordsData'] = $explodedSavedCrosswords[1] ? $crosswordsData : $defaultCells;
-      $horizontal_hint = process_crosswords_hints($form['field_crosswords_hrow']['widget'][0]['value']['#default_value']);
+      $horizontal_hint = CrosswordsController::processCrosswordsHints($form['field_crosswords_hrow']['widget'][0]['value']['#default_value']);
       $form['#attached']['drupalSettings']['horizontal_row'] = $horizontal_hint['row'] ? $horizontal_hint['row'] : '';
       $form['#attached']['drupalSettings']['horizontal_col'] = $horizontal_hint['col'] ? $horizontal_hint['col'] : '';
       $form['#attached']['drupalSettings']['horizontal_data'] = $horizontal_hint['data'] ? $horizontal_hint['data'] : '';
-      $verticle_hint = process_crosswords_hints($form['field_crosswords_hcolumn']['widget'][0]['value']['#default_value']);
+      $verticle_hint = CrosswordsController::processCrosswordsHints($form['field_crosswords_hcolumn']['widget'][0]['value']['#default_value']);
       $form['#attached']['drupalSettings']['verticle_row'] = $verticle_hint['row'] ? $verticle_hint['row'] : '';
       $form['#attached']['drupalSettings']['verticle_col'] = $verticle_hint['col'] ? $verticle_hint['col'] : '';
       $form['#attached']['drupalSettings']['verticle_data'] = $verticle_hint['data'] ? $verticle_hint['data'] : '';
-      // Load libraries/ themes of this Module.
-      // Check if its available to load automatically
+      // Load libraries/ themes of this Module and Check if its available to load automatically.
       $form['#attached']['library'][] = 'crosswords/crosswords.addedit';
       $language = $form['language']['#value'];
       $form['field_rows'][$language]['#suffix'] = '<label for="edit-field-crosswords-text-0-value"><b>Set Words</b> (Right Click on the Sheet below to add-remove Row-Column) </label><div id="crosswordsContainerDiv"></div><div id="crosswordsContainerDivRowColumn"></div>';
@@ -65,41 +68,13 @@ function crosswords_form_alter(&$form, FormStateInterface $form_state, $form_id)
           $form['actions'][$action]['#submit'][] = 'crosswords_edit_form_handler';
         }
       }
-      break;
+      
+     break;
     case 'node_crosswords_form':
       $form['#attached']['drupalSettings']['crosswordsData'] = $defaultCells;
       $form['#attached']['library'][] = 'crosswords/crosswords.addedit';
       $language = $form['language']['#value'];
       $form['field_rows'][$language]['#suffix'] = '<label for="edit-field-crosswords-text-0-value"><b>Set Words</b> (Right Click on the Sheet below to add-remove Row-Column)</label><div id="crosswordsContainerDiv"></div><div id="crosswordsContainerDivRowColumn"></div>';
-      break;
+     break;
   }
-  //dpm($form_state);
-}
-
-/**
- * {@inheritdoc}
- */
-function crosswords_edit_form_handler($form, FormStateInterface $form_state) {
-  //$node = $form_state->getFormObject()->getEntity();
-  //dpm($form_state->getValue('field_columns'));
-  //dpm($form_state->getValues());
-  //exit();
-}
-
-/**
- * {@inheritdoc}
- */
-function process_crosswords_hints($savedCrosswordsHint) {
-  // Processing Crosswords Row HINT
-  if (strpos($savedCrosswordsHint, '###RANDC###') !== false) {
-    $explodedSavedCrosswordsHint = explode('###RANDC###', $savedCrosswordsHint);
-  }
-  $savedCrosswordsHintRow['row'] = '[' . $explodedSavedCrosswordsHint[0] . ']';
-  $savedCrosswordsHintRow['col'] = '[' . $explodedSavedCrosswordsHint[1] . ']';
-  if (strpos($explodedSavedCrosswordsHint[2], '###') !== false) {
-    $explodedSavedCrosswordsHintInputArray = explode('###', $explodedSavedCrosswordsHint[2]);
-    $explodedSavedCrosswordsHintInputArray = implode('","', $explodedSavedCrosswordsHintInputArray);
-  }
-  $savedCrosswordsHintRow['data'] = '["' . $explodedSavedCrosswordsHintInputArray . '"]';
-  return $savedCrosswordsHintRow;
 }

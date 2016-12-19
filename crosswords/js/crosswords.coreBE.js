@@ -1,4 +1,4 @@
-/* global Drupal */
+/* global $, Drupal, drupalSettings, Handsontable */
 /* Script Written - Developed by Nirmalya Mondal typo3india AT gmail DOT com*/
 /**
  * @file
@@ -65,25 +65,26 @@
 
             /**
              * Render input field in Cell of Crosswords.
-             * @param '{instance}' check
-             * @param '{td}' table data id 
-             * @param '{row}' table row id 
-             * @param '{prop}' instance property
-             * @param '{value}' value at the cell
-             * @param '{cellProperties}' Cell Property
+             * @param '{object}' instance
+             * @param '{string}' td
+             * @param '{string}' row 
+             * @param '{string}' col
+             * @param '{string}' prop
+             * @param '{string}' value
+             * @param '{object}' cellProperties
              */
 
             function CrosswordsCellRenderer(instance, td, row, col, prop, value, cellProperties) {
                 Handsontable.renderers.TextRenderer.apply(this, arguments);
-                if (!value || value === '' || value == null) {
+                if (!value || value === '' || value === null) {
                     td.innerHTML = " ";
                 }
             } // CrosswordsRowRenderer()
 
             /**
              * Validate input field in Cell of Crosswords.
-             * @param '{string}' check
-             * @param '{callback}' true/false 
+             * @param '{string}' value
+             * @param '{string}' callback 
              */
 
             function CrosswordsCellValidator(value, callback) {
@@ -148,7 +149,7 @@
             jQuery.each(JSON.parse(settings.horizontal_data), function (index, value) {
                 index += 1;
                 jQuery('#crosswords-horizontal-h-' + index).val(value);
-                if (value != '') {
+                if (value !== '') {
                     horizontal_to_show = index;
                 }
             });
@@ -166,7 +167,7 @@
             jQuery.each(JSON.parse(settings.verticle_data), function (index, value) {
                 index += 1;
                 jQuery('#crosswords-verticle-h-' + index).val(value);
-                if (value != '') {
+                if (value !== '') {
                     verticle_to_show = index;
                 }
             });
@@ -174,7 +175,7 @@
 
             /**
              * Generate Hint Option Select Full box.
-             * @param ''
+             * 
              */
 
             function generate_hint_select_box() {
@@ -195,15 +196,15 @@
 
             /**
              * Generate Option Select.
-             * @param {Number} x - Total option to generate.
-             * @param {String} 'Row or Col' - as First option element.
-             * @param {Number} x - Which one to select.
+             * @param {int} number - Total option to generate.
+             * @param {string} rowOrcol - 'Row or Col' as First option element.
+             * @param {int} selectedIndex - Which one to select.
              */
 
             function generate_option_box(number, rowOrcol, selectedIndex) {
                 var return_option_string = '<option value="0">' + rowOrcol + '</option>';
                 for (var i = 1; i <= number; i++) {
-                    if (i == selectedIndex) {
+                    if (i === selectedIndex) {
                         return_option_string += '<option value="' + i + '" selected="selected">' + i + '</option>';
                     } else {
                         return_option_string += '<option value="' + i + '">' + i + '</option>';
@@ -215,7 +216,7 @@
 
             /**
              * Horizontal Hint Row data gathering and writing to textarea tag.
-             * @param ''
+             * 
              */
 
             function get_all_inputfrom_hrorizontal_hint() {
@@ -257,7 +258,7 @@
 
             /**
              * Verticle Hint Row data gathering and writing to textarea tag.
-             * @param ''
+             * 
              */
 
             function get_all_inputfrom_verticle_hint() {
@@ -299,7 +300,7 @@
 
             /**
              * Add Horizontal Hint row.
-             * @param ''
+             * 
              */
 
             function add_horizontal_hint_row() {
@@ -326,7 +327,7 @@
 
             /**
              * Remove Horizontal Hint row.
-             * @param ''
+             * 
              */
 
             function remove_horizontal_hint_row() {
@@ -350,7 +351,7 @@
 
             /**
              * Add Verticle Hint row.
-             * @param ''
+             * 
              */
 
             function add_verticle_hint_row() {
@@ -377,7 +378,7 @@
 
             /**
              * Remove Verticle Hint row.
-             * @param ''
+             * 
              */
 
             function remove_verticle_hint_row() {
@@ -400,7 +401,8 @@
             }
             /**
              * Setting Horizontal/ Verticle Hint row.
-             * @param ''
+             * @param {int} loop_no
+             * @param {string} h_or_v 
              */
 
             function setting_horizontal_verticle_hint_row(loop_no, h_or_v) {

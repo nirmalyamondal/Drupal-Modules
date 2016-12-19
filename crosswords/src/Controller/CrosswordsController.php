@@ -2,21 +2,28 @@
 
 namespace Drupal\crosswords\Controller;
 
-use Drupal\node\NodeInterface;
 /**
-  @file
-  Contains \Drupal\crosswords\Controller\CrosswordsController.
+ * @file
+ * Contains \Drupal\crosswords\Controller\CrosswordsController.
  */
-use Drupal\Core\Controller\ControllerBase;
 
+use Drupal\Core\Controller\ControllerBase;
+use Drupal\node\NodeInterface;
+
+/**
+ * Returns responses for crosswords controller routes.
+ */
 class CrosswordsController extends ControllerBase {
 
-    var $crosswords_hint_all = [];
+   /**
+     * {@inheritdoc}
+     *
+     */
+    public $crosswordsHintAll = [];
 
     /**
-     * action showCrosswords
+     * {@inheritdoc}
      *
-     * @return array
      */
     public function showCrosswords(NodeInterface $cross_node) {
         if (!is_object($cross_node)) {
@@ -26,10 +33,10 @@ class CrosswordsController extends ControllerBase {
             return [];
         }
         $savedCrosswords = $cross_node->get('field_crosswords_text')->value;
-        $crosswords_hcolumn = $cross_node->get('field_crosswords_hcolumn')->value;
-        $crosswords_hrow = $cross_node->get('field_crosswords_hrow')->value;
-        $crosswords_title = $cross_node->get('title')->value;
-        if (strpos($savedCrosswords, '###') !== false) {
+        $crosswordsHcolumn = $cross_node->get('field_crosswords_hcolumn')->value;
+        $crosswordsHrow = $cross_node->get('field_crosswords_hrow')->value;
+        $crosswordsTitle = $cross_node->get('title')->value;
+        if (strpos($savedCrosswords, '###') !== FALSE) {
             $explodedSavedCrosswords = explode('###', $savedCrosswords);
         }
         $crosswordsArray = explode(",", $explodedSavedCrosswords[1]);
@@ -43,22 +50,21 @@ class CrosswordsController extends ControllerBase {
             }
             $counter++;
         }
-        $num_cols = $explodedSavedCrosswords[0];
-        $num_rows = $arrayCounted / $num_cols;
-        // Process Hints
-        $this->getCrosswordsHintRow($crosswords_hrow, $num_rows, $num_cols, 'hor');
-        $this->getCrosswordsHintRow($crosswords_hcolumn, $num_rows, $num_cols, 'ver');
-        $crosswords_hint_vh = $this->processCrosswordsHintForHorizontalVerticle();
+        $numCols = $explodedSavedCrosswords[0];
+        $numRows = $arrayCounted / $numCols;
+        // Process Hints.
+        $this->getCrosswordsHintRow($crosswordsHrow, $numRows, $numCols, 'hor');
+        $this->getCrosswordsHintRow($crosswordsHcolumn, $numRows, $numCols, 'ver');
+        $crosswordsHintVh = $this->processCrosswordsHintForHorizontalVerticle();
         return [
-            //'#type' => 'markup',
             '#theme' => 'crosswords-crosswords',
-            '#crosswords_variable_title' => $crosswords_title,
+            '#crosswords_variable_title' => $crosswordsTitle,
             '#attached' => [
                 'drupalSettings' => [
                     'crosswordsData' => $crosswordsData,
-                    'crosswordsCaption' => $crosswords_title,
-                    'crosswordsVerticle' => $crosswords_hint_vh['ver'],
-                    'crosswordsHorizontal' => $crosswords_hint_vh['hor'],
+                    'crosswordsCaption' => $crosswordsTitle,
+                    'crosswordsVerticle' => $crosswordsHintVh['ver'],
+                    'crosswordsHorizontal' => $crosswordsHintVh['hor'],
                 ],
             ],
         ];
@@ -67,22 +73,21 @@ class CrosswordsController extends ControllerBase {
     /**
      * {@inheritdoc}
      */
-    public function getCrosswordsHintRow($crosswords_hint, $rows, $cols, $hor_ver) {
-        if (strpos($crosswords_hint, '###RANDC###') !== false) {
-            $crosswords_hint_array = explode('###RANDC###', $crosswords_hint);
+    public function getCrosswordsHintRow($crosswordsHint, $rows, $cols, $horVer) {
+        if (strpos($crosswordsHint, '###RANDC###') !== FALSE) {
+            $crosswordsHintArray = explode('###RANDC###', $crosswordsHint);
         }
-        $crosswords_hint_row_array = explode(',', $crosswords_hint_array[0]);
-        $crosswords_hint_col_array = explode(',', $crosswords_hint_array[1]);
-        if (strpos($crosswords_hint_array[2], '###') !== false) {
-            $crosswords_hint_data_array = explode('###', $crosswords_hint_array[2]);
+        $crosswordsHintRowArray = explode(',', $crosswordsHintArray[0]);
+        $crosswordsHintColArray = explode(',', $crosswordsHintArray[1]);
+        if (strpos($crosswordsHintArray[2], '###') !== FALSE) {
+            $crosswordsHintDataArray = explode('###', $crosswordsHintArray[2]);
         }
-        $max_cell = $rows * $cols;
-        $final_hint_string = '';
-        foreach ($crosswords_hint_row_array as $key => $value) {
+        $maxCell = $rows * $cols;
+        foreach ($crosswordsHintRowArray as $key => $value) {
             if ($value >= 1) {
-                $cell_number = ($value - 1) * $cols + $crosswords_hint_col_array[$key];
-                if (($cell_number <= $max_cell) && ($crosswords_hint_data_array[$key] != '')) {
-                    $this->crosswords_hint_all[$cell_number][$hor_ver] = $crosswords_hint_data_array[$key];
+                $cellNumber = ($value - 1) * $cols + $crosswordsHintColArray[$key];
+                if (($cellNumber <= $maxCell) && ($crosswordsHintDataArray[$key] != '')) {
+                    $this->crosswordsHintAll[$cellNumber][$horVer] = $crosswordsHintDataArray[$key];
                 }
             }
         }
@@ -92,22 +97,40 @@ class CrosswordsController extends ControllerBase {
      * {@inheritdoc}
      */
     public function processCrosswordsHintForHorizontalVerticle() {
-        ksort($this->crosswords_hint_all);
-        $final_hint_string_hor = $final_hint_string_ver = '';
+        ksort($this->crosswordsHintAll);
+        $finalHintStringHor = $finalHintStringVer = '';
         $counter = 1;
-        foreach ($this->crosswords_hint_all as $key => $value) {
+        foreach ($this->crosswordsHintAll as $key => $value) {
             if (isset($value['hor'])) {
-                $final_hint_string_hor .= $counter . ' ' . $value['hor'] . "\n";
+                $finalHintStringHor .= $counter . ' ' . $value['hor'] . "\n";
             }
             if (isset($value['ver'])) {
-                $final_hint_string_ver .= $counter . ' ' . $value['ver'] . "\n";
+                $finalHintStringVer .= $counter . ' ' . $value['ver'] . "\n";
             }
             $counter++;
         }
-        $final_hint_array = [];
-        $final_hint_array['hor'] = $final_hint_string_hor;
-        $final_hint_array['ver'] = $final_hint_string_ver;
-        return $final_hint_array;
+        $finalHintArray = [];
+        $finalHintArray['hor'] = $finalHintStringHor;
+        $finalHintArray['ver'] = $finalHintStringVer;
+        return $finalHintArray;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function processCrosswordsHints($savedCrosswordsHint) {
+        // Processing Crosswords Row HINT.
+        if (strpos($savedCrosswordsHint, '###RANDC###') !== FALSE) {
+            $explodedSavedCrosswordsHint = explode('###RANDC###', $savedCrosswordsHint);
+        }
+        $savedCrosswordsHintRow['row'] = '[' . $explodedSavedCrosswordsHint[0] . ']';
+        $savedCrosswordsHintRow['col'] = '[' . $explodedSavedCrosswordsHint[1] . ']';
+        if (strpos($explodedSavedCrosswordsHint[2], '###') !== FALSE) {
+            $explodedSavedCrosswordsHintInputArray = explode('###', $explodedSavedCrosswordsHint[2]);
+            $explodedSavedCrosswordsHintInputArray = implode('","', $explodedSavedCrosswordsHintInputArray);
+        }
+        $savedCrosswordsHintRow['data'] = '["' . $explodedSavedCrosswordsHintInputArray . '"]';
+        return $savedCrosswordsHintRow;
     }
 
 }
