@@ -4,6 +4,7 @@
  * @file
  * Install file for crosswords.
  */
+use Drupal\node\Entity\NodeType;
 
 /**
  * Implements hook_install().
@@ -42,5 +43,12 @@ function crosswords_uninstall() {
   $locked = Drupal::state()->get('node.type.locked');
   unset($locked['crosswords']);
   Drupal::state()->set('node.type.locked', $locked);
+  $query = \Drupal::entityQuery('node')->condition('type', 'crosswords');
+  $nids = $query->execute();
+  foreach ($nids as $nid) {
+    \Drupal\node\Entity\Node::load($nid)->delete();
+  }
+  $crosswordsNodeType = NodeType::load('crosswords');
+  $crosswordsNodeType->delete();
   drupal_flush_all_caches();
 }

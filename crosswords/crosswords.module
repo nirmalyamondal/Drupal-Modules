@@ -7,6 +7,9 @@
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\crosswords\Controller\CrosswordsController;
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Url;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * {@inheritdoc}
@@ -67,8 +70,7 @@ function crosswords_form_alter(&$form, FormStateInterface $form_state, $form_id)
         if ($action != 'preview' && isset($form['actions'][$action]['#type']) && $form['actions'][$action]['#type'] === 'submit') {
           $form['actions'][$action]['#submit'][] = 'crosswords_edit_form_handler';
         }
-      }
-      
+      }      
      break;
     case 'node_crosswords_form':
       $form['#attached']['drupalSettings']['crosswordsData'] = $defaultCells;
@@ -76,5 +78,43 @@ function crosswords_form_alter(&$form, FormStateInterface $form_state, $form_id)
       $language = $form['language']['#value'];
       $form['field_rows'][$language]['#suffix'] = '<label for="edit-field-crosswords-text-0-value"><b>Set Words</b> (Right Click on the Sheet below to add-remove Row-Column)</label><div id="crosswordsContainerDiv"></div><div id="crosswordsContainerDivRowColumn"></div>';
      break;
+  }
+}
+
+/**
+ * {@inheritdoc}
+ */
+function crosswords_node_view(array &$build, \Drupal\Core\Entity\EntityInterface $entity, \Drupal\Core\Entity\Display\EntityViewDisplayInterface $display, $view_mode) {
+    if ($entity->getType() === 'crosswords') {
+        $host = \Drupal::request()->getSchemeAndHttpHost();
+        $redirectToUrl  = $host.'/crosswords/'.$entity->id();
+        $response = new RedirectResponse($redirectToUrl);
+        $response->send();
+        return;
+    }
+}
+
+/**
+ * Implements crosswords_help().
+ */
+function crosswords_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    case 'help.page.crosswords':
+      $output = '<h2>' . t('Crosswords:') . '</h2>';
+      $output .= '<p>' . t('Follow these steps to set up and start using your Crosswords:') . '</p>';
+      $output .= '<ol>';
+      $output .= '<li>' . t('<strong>Install -</strong> Once this Module is installed Editor can found a new content type as "Crosswords".') . '</li>';
+      $output .= '<li>' . t('Now create some crosswords content based on this content type. Lets say, We\'ve created two crosswords content and these are Crosswords1 and Crosswords2.') . '</li>';
+      $output .= '<li>' . t('To Display a particular crosswords say Crosswords1 in frontend Editor can set url like "www.myplayground.com/crosswords/1" where 1 is the {nid} of Crosswords1."') . '</li>';
+      // Display a link to the create content page if Node crosswords is enabled.
+      if (\Drupal::moduleHandler()->moduleExists('crosswords')) {
+        $output .= '<li>' . t('<strong>Start creating Crosswords</strong> Finally, you may click here <a href=":content/crosswords">add new Crosswords</a>.', [':content' => \Drupal::url('node.add_page')]) . '</li>';
+      }
+      $output .= '<li>' . t('<strong>Un-Install</strong> Un-installation automatically deleted the Crosswords contents and content type.') . '</li>';
+      $output .= '<li>' . t('Found problem to uninstall crosswords. First un-install the Module then delete contents and content type recursively.') . '</li>';
+      $output .= '<li>' . t('As Crosswords Module contains Locked Content type Admin need to un-install Module first.') . '</li>';
+      $output .= '<li>' . t('<strong>Re-Install</strong> Please delete all crosswords contents and crossword content type first.') . '</li>';
+      $output .= '</ol>';
+      return ['#markup' => $output];
   }
 }
