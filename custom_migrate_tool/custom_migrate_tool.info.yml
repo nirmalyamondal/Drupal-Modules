@@ -1,0 +1,6 @@
+name: Migrate Tool To fix migrated Datas
+description: A module to fix already migrated data
+package: Custom
+type: module
+version: 1.0
+core: 8.x
