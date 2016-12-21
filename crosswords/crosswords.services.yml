@@ -1,0 +1,5 @@
+services:
+  crosswords.contenttyperedirect:
+    class: Drupal\crosswords\EventSubscriber\CrosswordsContenttypeRedirect
+    tags:
+      - { name: event_subscriber }
