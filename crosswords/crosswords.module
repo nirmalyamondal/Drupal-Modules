@@ -82,19 +82,6 @@ function crosswords_form_alter(&$form, FormStateInterface $form_state, $form_id)
 }
 
 /**
- * {@inheritdoc}
- */
-function crosswords_node_view(array &$build, \Drupal\Core\Entity\EntityInterface $entity, \Drupal\Core\Entity\Display\EntityViewDisplayInterface $display, $view_mode) {
-    if ($entity->getType() === 'crosswords') {
-        $host = \Drupal::request()->getSchemeAndHttpHost();
-        $redirectToUrl  = $host.'/crosswords/'.$entity->id();
-        $response = new RedirectResponse($redirectToUrl);
-        $response->send();
-        return;
-    }
-}
-
-/**
  * Implements crosswords_help().
  */
 function crosswords_help($route_name, RouteMatchInterface $route_match) {
@@ -113,7 +100,7 @@ function crosswords_help($route_name, RouteMatchInterface $route_match) {
       $output .= '<li>' . t('<strong>Un-Install</strong> Un-installation automatically deleted the Crosswords contents and content type.') . '</li>';
       $output .= '<li>' . t('Found problem to uninstall crosswords. First un-install the Module then delete contents and content type recursively.') . '</li>';
       $output .= '<li>' . t('As Crosswords Module contains Locked Content type Admin need to un-install Module first.') . '</li>';
-      $output .= '<li>' . t('<strong>Re-Install</strong> Please delete all crosswords contents and crossword content type first.') . '</li>';
+      $output .= '<li>' . t('<strong>Re-Install</strong> Please delete all crosswords contents and crosswords content type first.') . '</li>';
       $output .= '</ol>';
       return ['#markup' => $output];
   }
