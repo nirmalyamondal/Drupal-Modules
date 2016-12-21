@@ -1,0 +1,25 @@
+id: custom_file
+source:
+  plugin: custom_file
+process:
+  fid: fid
+  filename: filename
+  uri: uri
+  uid:
+    -
+      plugin: default_value
+      default_value: 1
+destination:
+  plugin: entity:file
+#  source_path_property: uri
+#  destination_path_property: uri
+#  urlencode: true
+#  source_base_path: /home/yb03807467Public/d7test.local/sites/default/files
+status: true
+migration_group: custom
+dependencies:
+  module:
+    - file
+label: Migrate D7 Files
+migration_dependencies: {}
+   

@@ -1,0 +1,51 @@
+id: custom_event
+label: EVENT node migration from Drupal 7
+migration_group: custom
+dependencies:
+ enforced:
+    module:
+      - migrate_custom
+source:
+  plugin: custom_event
+destination:
+  plugin: entity:node
+  bundle: event
+process:
+#  nid: nid
+#  vid: vid
+  type: type
+  langcode:
+    plugin: static_map
+    bypass: true
+    source: language
+    map:
+      und: en
+  title: title
+  uid: uid
+  status: status
+  created: created
+  changed: changed
+  promote: promote
+  sticky: sticky
+  'body/format':
+    plugin: static_map
+    bypass: true
+    source: body_format
+    map:
+      1: plain_text
+      2: restricted_html
+      3: full_html
+      4: full_html
+  'body/value': body_value
+  'body/summary': body_summary
+  field_highlight: sourceHighlight
+  field_to_date: sourceDate
+  field_slideshare_ppt_id: sourcePpt
+  field_author_name: sourceAuthor
+  field_linkedin_link: sourceLinkedin
+  field_drupal_give: sourceDgive
+#  field_event_type: ttrdEvent
+#  field_industry_category: ttrdIndustry
+#  field_services_products: ttrdServices
+  field_display_image: images
+

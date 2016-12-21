@@ -1,0 +1,18 @@
+<?php
+
+function migrate_custom_uninstall() {
+  //db_query("DELETE FROM {config} WHERE name LIKE 'migrate_plus.migration.custom_article%'");
+  db_query("DELETE FROM {config} WHERE name LIKE 'migrate_plus.migration.custom_file%'");
+  //db_query("DELETE FROM {config} WHERE name LIKE 'migrate_plus.migration.custom_taxonomy_term%'");
+  //db_query("DELETE FROM {config} WHERE name LIKE 'migrate_plus.migration.custom_taxonomy_vocabulary%'");
+  //db_query("DELETE FROM {config} WHERE name LIKE 'migrate_plus.migration.custom_user%'");
+  //\Drupal\migrate\Entity\Migration::load('migrate_custom')->delete();
+  drupal_flush_all_caches();
+}
+
+// Procedural code
+//entity_load('migration', 'migrate_custom')->delete();
+// OO code
+//\Drupal::entityManager()->getStorage('migration')->load('migrate_custom')->delete();
+// or:
+//\Drupal\migrate\Entity\Migration::load('migrate_custom')->delete();

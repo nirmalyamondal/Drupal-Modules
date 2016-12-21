@@ -1,0 +1,31 @@
+custom_migrate_tool:
+  path: '/custommigrate/fixwebinar'
+  defaults:
+    _title: 'Fixing Webinar Data: Time, Presenter, Bodytext (Media Element)'
+    _controller: 'Drupal\custom_migrate_tool\Controller\CustomMigrateToolController::processWebinarFix'
+  requirements:
+    _permission: 'access content'
+
+custom_migrate_digitalasset:
+  path: '/custommigrate/digitalasset'
+  defaults:
+    _controller: 'Drupal\custom_migrate_tool\Controller\CustomMigrateToolDigitalAssetController::digitalAsset'
+    _title: 'Digital Asset Migration Body.'
+  requirements:
+    _permission: 'access content'
+
+custom_migrate_mediamodule:
+  path: '/custommigrate/bodymedia'
+  defaults:
+    _controller: 'Drupal\custom_migrate_tool\Controller\CustomMigrateToolBodyMediaController::bodyMediaProcess'
+    _title: 'Process Media JSON inside Body.'
+  requirements:
+    _permission: 'access content'
+
+custom_migrate_thanks:
+  path: '/custommigrate/thanks'
+  defaults:
+    _controller: 'Drupal\custom_migrate_tool\Controller\CustomMigrateToolController::showThanks'
+    _title: 'Webinar Fixed.'
+  requirements:
+    _permission: 'access content'
