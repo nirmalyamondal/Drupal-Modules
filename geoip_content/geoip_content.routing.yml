@@ -1,0 +1,7 @@
+geoip_content_view:
+  path: '/geoipcontent'
+  defaults:
+    _title: 'GeoIP Content'
+    _controller: 'Drupal\geoip_content\Controller\GeoipContentController::showData'
+  requirements:
+    _permission: 'access content'

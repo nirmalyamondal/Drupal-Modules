@@ -1,0 +1,7 @@
+geoip_content:
+  version: 8.2.1
+  js:
+    geoip_content.js: {}
+  dependencies:
+  css:
+    theme:

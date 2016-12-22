@@ -1,0 +1,6 @@
+name: Display Content basedd on Geo IP
+description: A module to show hide content based on Geo IP
+package: Custom
+type: module
+version: 1.0
+core: 8.x
