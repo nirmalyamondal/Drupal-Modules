@@ -33,11 +33,15 @@
             $("#" + cw_id).crossword();
 
             $("#crossword_check").click(function () {
-                $.crosswordCheck({
+                var check_crosswords = '';
+		check_crosswords = $.crosswordCheck({
                     solution: cw,
                     crossword_id: cw_id,
                     level: 1
                 });
+		if(check_crosswords == false){
+		    alert('Excellent! You\'ve solved this Crossword puzzle!');
+		}
             });
 
         } // attach

@@ -3,9 +3,10 @@ status: true
 dependencies: {  }
 name: 'Crosswords'
 type: crosswords
-description: 'You must uninstall this module before you delete this content type.'
-help: ''
+description: 'You must uninstall this module before you delete this content type. For more detail check Help.'
+help: 'Write Words in the expandable box below and add remove hints for vertical and horizontal words by selecting row and column number. Please refer the existing Crosswords and admin/help/crosswords for more detail.'
 new_revision: false
 preview_mode: 1
 display_submitted: true
 third_party_settings: {  }
+
