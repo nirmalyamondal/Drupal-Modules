@@ -452,9 +452,12 @@
                 });
                 griglia = griglia.toUpperCase();
                 $cell.removeClass(opts.td_err);
+		var found_error = false;
                 $.each(solution.split(""), function (i, letter) {
-                    if (letter != griglia[i])
+                    if (letter != griglia[i]) {
                         $cell.eq(i).addClass(opts.td_err);
+                        found_error = true;
+		    }
                 });
                 break;
 
@@ -475,8 +478,8 @@
                 // default:
                 //     break;
         }
-
-        return this;
+        //return this;
+	return found_error;
     };
 // end plugin definition
 

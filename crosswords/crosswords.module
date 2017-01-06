@@ -9,7 +9,6 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\crosswords\Controller\CrosswordsController;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Url;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * {@inheritdoc}
@@ -65,7 +64,7 @@ function crosswords_form_alter(&$form, FormStateInterface $form_state, $form_id)
       // Load libraries/ themes of this Module and Check if its available to load automatically.
       $form['#attached']['library'][] = 'crosswords/crosswords.addedit';
       $language = $form['language']['#value'];
-      $form['field_rows'][$language]['#suffix'] = '<label for="edit-field-crosswords-text-0-value"><b>Set Words</b> (Right Click on the Sheet below to add-remove Row-Column) </label><div id="crosswordsContainerDiv"></div><div id="crosswordsContainerDivRowColumn"></div>';
+      $form['field_rows'][$language]['#suffix'] = '<label for="edit-field-crosswords-text-0-value"><b>Set Words in the table Below</b> (Right Click on the Table below to add-remove Row-Column) </label><div id="crosswordsContainerDiv"></div><div id="crosswordsContainerDivRowColumn"></div>';
       foreach (array_keys($form['actions']) as $action) {
         if ($action != 'preview' && isset($form['actions'][$action]['#type']) && $form['actions'][$action]['#type'] === 'submit') {
           $form['actions'][$action]['#submit'][] = 'crosswords_edit_form_handler';
@@ -76,7 +75,7 @@ function crosswords_form_alter(&$form, FormStateInterface $form_state, $form_id)
       $form['#attached']['drupalSettings']['crosswordsData'] = $defaultCells;
       $form['#attached']['library'][] = 'crosswords/crosswords.addedit';
       $language = $form['language']['#value'];
-      $form['field_rows'][$language]['#suffix'] = '<label for="edit-field-crosswords-text-0-value"><b>Set Words</b> (Right Click on the Sheet below to add-remove Row-Column)</label><div id="crosswordsContainerDiv"></div><div id="crosswordsContainerDivRowColumn"></div>';
+      $form['field_rows'][$language]['#suffix'] = '<label for="edit-field-crosswords-text-0-value"><b>Set Words in the table Below</b> (Right Click on the Table below to add-remove Row-Column)</label><div id="crosswordsContainerDiv"></div><div id="crosswordsContainerDivRowColumn"></div>';
      break;
   }
 }
@@ -95,12 +94,12 @@ function crosswords_help($route_name, RouteMatchInterface $route_match) {
       $output .= '<li>' . t('To Display a particular crosswords say Crosswords1 in frontend Editor can set url like "www.myplayground.com/crosswords/1" where 1 is the {nid} of Crosswords1."') . '</li>';
       // Display a link to the create content page if Node crosswords is enabled.
       if (\Drupal::moduleHandler()->moduleExists('crosswords')) {
-        $output .= '<li>' . t('<strong>Start creating Crosswords</strong> Finally, you may click here <a href=":content/crosswords">add new Crosswords</a>.', [':content' => \Drupal::url('node.add_page')]) . '</li>';
+        $output .= '<li>' . t('<strong>Start creating Crosswords -</strong> Finally, you may click here <a href=":content/crosswords">add new Crosswords</a>.', [':content' => \Drupal::url('node.add_page')]) . '</li>';
       }
-      $output .= '<li>' . t('<strong>Un-Install</strong> Un-installation automatically deleted the Crosswords contents and content type.') . '</li>';
+      $output .= '<li>' . t('<strong>Un-Install -</strong> Un-installation automatically deleted the Crosswords contents and content type.') . '</li>';
       $output .= '<li>' . t('Found problem to uninstall crosswords. First un-install the Module then delete contents and content type recursively.') . '</li>';
       $output .= '<li>' . t('As Crosswords Module contains Locked Content type Admin need to un-install Module first.') . '</li>';
-      $output .= '<li>' . t('<strong>Re-Install</strong> Please delete all crosswords contents and crosswords content type first.') . '</li>';
+      $output .= '<li>' . t('<strong>Re-Install -</strong> Please delete all crosswords contents and crosswords content type first.') . '</li>';
       $output .= '</ol>';
       return ['#markup' => $output];
   }
