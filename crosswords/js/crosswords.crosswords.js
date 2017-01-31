@@ -483,9 +483,4 @@
     };
 // end plugin definition
 
-
-
-
-
-
 })(jQuery);

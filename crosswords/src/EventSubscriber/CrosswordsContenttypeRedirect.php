@@ -1,18 +1,20 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\crosswords\EventSubscriber\CrosswordsContenttypeRedirect
- */
-
 namespace Drupal\crosswords\EventSubscriber;
 
-use Drupal\Core\Url;
+/**
+ * @file
+ * Contains \Drupal\crosswords\EventSubscriber\CrosswordsContenttypeRedirect.
+ */
+
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
+/**
+ * Redirect Crosswords records to a predefined path.
+ */
 class CrosswordsContenttypeRedirect implements EventSubscriberInterface {
 
   /**
@@ -25,7 +27,7 @@ class CrosswordsContenttypeRedirect implements EventSubscriberInterface {
     return([
       KernelEvents::REQUEST => [
           ['contentTypeRedirect'],
-      ]
+      ],
     ]);
   }
 
@@ -33,6 +35,7 @@ class CrosswordsContenttypeRedirect implements EventSubscriberInterface {
    * Redirect requests for crosswords node detail pages to crosswords/{nid}.
    *
    * @param GetResponseEvent $event
+   *
    * @return void
    */
   public function contentTypeRedirect(GetResponseEvent $event) {
