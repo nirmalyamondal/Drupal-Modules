@@ -1,7 +1,7 @@
 crosswords.addedit:
   version: 8.x
   js:
-    js/handsontable.full.js: {}
+    https://cdnjs.cloudflare.com/ajax/libs/handsontable/0.30.1/handsontable.full.js: { type: external, minified: true }
     js/crosswords.coreBE.js: {}
   dependencies:
     - core/jquery
@@ -12,13 +12,13 @@ crosswords.addedit:
     - core/drupalSettings
   css:
     theme:
-      css/handsontable.full.min.css: {}
+      https://cdnjs.cloudflare.com/ajax/libs/handsontable/0.30.1/handsontable.full.min.css: { type: external, minified: true }
       css/crosswords.customBE.css: {}
 
 crosswords.display:
   version: 8.x
   js:
-    js/jquery-1.4.2.min.js: {}
+    https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js: { type: external, minified: true }
     js/jquery.easydrag.handler.beta2.js: {}
     js/crosswords.crosswords.js: {}
     js/crosswords.coreFE.js: {}

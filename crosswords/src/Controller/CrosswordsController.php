@@ -6,6 +6,7 @@ namespace Drupal\crosswords\Controller;
  * @file
  * Contains \Drupal\crosswords\Controller\CrosswordsController.
  */
+
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\node\NodeInterface;
 
@@ -16,13 +17,11 @@ class CrosswordsController extends ControllerBase {
 
   /**
    * {@inheritdoc}
-   *
    */
   public $crosswordsHintAll = [];
 
   /**
    * {@inheritdoc}
-   *
    */
   public function showCrosswords(NodeInterface $cross_node) {
     if (!is_object($cross_node)) {
@@ -45,7 +44,7 @@ class CrosswordsController extends ControllerBase {
     $crosswordsData = '';
     $counter = 1;
     $arrayCounted = count($crosswordsArray);
-    foreach ($crosswordsArray as $cArrayKey => $cArrayValue) {
+    foreach ($crosswordsArray as $cArrayValue) {  
       $crosswordsData .= $cArrayValue ? $cArrayValue : '#';
       if (($counter % $explodedSavedCrosswords[0] == 0) && ($counter < $arrayCounted)) {
         $crosswordsData .= "\n";
@@ -85,7 +84,7 @@ class CrosswordsController extends ControllerBase {
       $crosswordsHintDataArray = explode('###', $crosswordsHintArray[2]);
     }
     $maxCell = $rows * $cols;
-    foreach ($crosswordsHintRowArray as $key => $value) {
+	foreach ($crosswordsHintRowArray as $key => $value) {
       if ($value >= 1) {
         $cellNumber = ($value - 1) * $cols + $crosswordsHintColArray[$key];
         if (($cellNumber <= $maxCell) && ($crosswordsHintDataArray[$key] != '')) {
@@ -102,7 +101,7 @@ class CrosswordsController extends ControllerBase {
     ksort($this->crosswordsHintAll);
     $finalHintStringHor = $finalHintStringVer = '';
     $counter = 1;
-    foreach ($this->crosswordsHintAll as $key => $value) {
+    foreach ($this->crosswordsHintAll as $value) {	
       if (isset($value['hor'])) {
         $finalHintStringHor .= $counter . ' ' . $value['hor'] . "\n";
       }

@@ -40,7 +40,7 @@ function crosswords_form_alter(&$form, FormStateInterface $form_state, $form_id)
       $counter = 1;
       $arrayCounted = count($crosswordsArray);
       $crosswordsDataTemp = '';
-      foreach ($crosswordsArray as $cArrayKey => $cArrayValue) {
+      foreach ($crosswordsArray as $cArrayValue) {
         $crosswordsDataTemp = $crosswordsDataTemp ? $crosswordsDataTemp . ',"' . $cArrayValue . '"' : '"' . $cArrayValue . '"';
         if ($counter == $arrayCounted) {
           $crosswordsData .= $crosswordsDataTemp;
