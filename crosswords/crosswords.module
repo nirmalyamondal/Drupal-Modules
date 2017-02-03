@@ -61,7 +61,7 @@ function crosswords_form_alter(&$form, FormStateInterface $form_state, $form_id)
       $form['#attached']['drupalSettings']['verticle_row'] = $verticle_hint['row'] ? $verticle_hint['row'] : '';
       $form['#attached']['drupalSettings']['verticle_col'] = $verticle_hint['col'] ? $verticle_hint['col'] : '';
       $form['#attached']['drupalSettings']['verticle_data'] = $verticle_hint['data'] ? $verticle_hint['data'] : '';
-      // Load libraries/ themes of this Module and Check if its available to load automatically.
+      // Load libraries/ themes of this Module automatically.
       $form['#attached']['library'][] = 'crosswords/crosswords.addedit';
       $language = $form['language']['#value'];
       $form['field_rows'][$language]['#suffix'] = '<label for="edit-field-crosswords-text-0-value"><b>Set Words in the table Below</b> (Right Click on the Table below to add-remove Row-Column) </label><div id="crosswordsContainerDiv"></div><div id="crosswordsContainerDivRowColumn"></div>';
@@ -69,14 +69,15 @@ function crosswords_form_alter(&$form, FormStateInterface $form_state, $form_id)
         if ($action != 'preview' && isset($form['actions'][$action]['#type']) && $form['actions'][$action]['#type'] === 'submit') {
           $form['actions'][$action]['#submit'][] = 'crosswords_edit_form_handler';
         }
-      }      
-     break;
+      }
+      break;
+
     case 'node_crosswords_form':
       $form['#attached']['drupalSettings']['crosswordsData'] = $defaultCells;
       $form['#attached']['library'][] = 'crosswords/crosswords.addedit';
       $language = $form['language']['#value'];
       $form['field_rows'][$language]['#suffix'] = '<label for="edit-field-crosswords-text-0-value"><b>Set Words in the table Below</b> (Right Click on the Table below to add-remove Row-Column)</label><div id="crosswordsContainerDiv"></div><div id="crosswordsContainerDivRowColumn"></div>';
-     break;
+      break;
   }
 }
 
@@ -90,9 +91,9 @@ function crosswords_help($route_name, RouteMatchInterface $route_match) {
       $output .= '<p>' . t('Follow these steps to set up and start using your Crosswords:') . '</p>';
       $output .= '<ol>';
       $output .= '<li>' . t('<strong>Install -</strong> Once this Module is installed Editor can found a new content type as "Crosswords".') . '</li>';
-      $output .= '<li>' . t('Now create some crosswords content based on this content type. Lets say, We\'ve created two crosswords content and these are Crosswords1 and Crosswords2.') . '</li>';
+      $output .= '<li>' . t('Now create some crosswords content based on this content type. Lets say, We have created two crosswords content and these are Crosswords1 and Crosswords2.') . '</li>';
       $output .= '<li>' . t('To Display a particular crosswords say Crosswords1 in frontend Editor can set url like "www.myplayground.com/crosswords/1" where 1 is the {nid} of Crosswords1."') . '</li>';
-      // Display a link to the create content page if Node crosswords is enabled.
+      // Display a link to create content page if Crosswords is enabled.
       if (\Drupal::moduleHandler()->moduleExists('crosswords')) {
         $output .= '<li>' . t('<strong>Start creating Crosswords -</strong> Finally, you may click here <a href=":content/crosswords">add new Crosswords</a>.', [':content' => \Drupal::url('node.add_page')]) . '</li>';
       }
